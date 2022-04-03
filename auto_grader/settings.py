@@ -128,7 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
 BASE_URL = credentials.get('base_url', '')
+
 AUTH_USER_MODEL = 'users.User'
 
 # Default primary key field type
