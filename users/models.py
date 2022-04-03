@@ -34,7 +34,6 @@ class Role(models.Model):
     def __str__(self):
         return str(self.name)
 
-
 class UserManager(BaseUserManager):
 
     def _create_user(self, contact, password, **extra_fields):
@@ -61,8 +60,6 @@ class UserManager(BaseUserManager):
 
         return self._create_user(contact, password=password, **extra_fields)
 
-
-
 class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -86,3 +83,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['-date_joined']
+
+class Student(models.Model):
+    user = models.ForeignKey(User, related_name='student', on_delete=models.CASCADE)
+    student_id = models.BigIntegerField(default=0, unique=True)
+    name = models.TextField(blank=True, null=True)
+    section = models.CharField(max_length=1, blank=True, null=True)
+    academic_year = models.SmallIntegerField(null=True, blank=True)
+    semester = models.SmallIntegerField(null=True, blank=True)
+    roll_no = models.SmallIntegerField(null=True, blank=True)
+    
+    class Meta:
+        db_table = 'student'
+    
+    def __str__(self):
+        return self.name + ' ' + str(self.student_id)
+    
