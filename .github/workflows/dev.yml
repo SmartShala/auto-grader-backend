@@ -19,8 +19,8 @@ jobs:
       - name: Deploy DRF app
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
           username: root
           
           script: |
