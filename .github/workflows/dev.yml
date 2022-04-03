@@ -29,6 +29,7 @@ jobs:
             cd codebase
             git pull origin:dev
             source ./venv/bin/activate
+            cd auto-grader-backend
             pip install -r requirements.txt
             gunicorn -c config/gunicorn/dev.py
             echo "Successfully deployed"
