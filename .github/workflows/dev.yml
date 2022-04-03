@@ -4,8 +4,6 @@ name: build & deploy
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ dev ]
   pull_request:
     branches: [ dev ]
 
@@ -31,6 +29,6 @@ jobs:
             source ./venv/bin/activate
             cd auto-grader-backend
             pip install -r requirements.txt
-            gunicorn -c config/gunicorn/dev.py
+            gunicorn -b 0.0.0.0:8000 -w 8 --reload -D auto_grader.wsgi:application
             echo "Successfully deployed"
             
