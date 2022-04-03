@@ -5,6 +5,9 @@ __pycache__/
 <<<<<<< HEAD
 *.env.json
 
+=======
+.env.json
+>>>>>>> c0ed299083b3895cf13350bfb7284ec296ac7b46
 # C extensions
 *.so
 
