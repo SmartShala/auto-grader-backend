@@ -24,10 +24,9 @@ jobs:
           username: root
           
           script: |
-            cd codebase
-            git pull origin:dev
-            source ./venv/bin/activate
             cd auto-grader-backend
+            git pull origin:dev --force
+            source ./venv/bin/activate
             pip install -r requirements.txt
             gunicorn -b 0.0.0.0:8000 -w 8 --reload -D auto_grader.wsgi:application
             echo "Successfully deployed"
