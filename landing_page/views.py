@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from landing_page.models import Testimonial,QueryData
-from psycopg2 import IntegrityError
+from django.db.utils import IntegrityError
 # Create your views here.
 def index(request):
     if request.method == 'GET':
