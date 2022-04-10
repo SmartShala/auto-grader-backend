@@ -63,7 +63,7 @@ ROOT_URLCONF = 'auto_grader.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,8 +129,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
+STATIC_ROOT = BASE_DIR
+STATICFILES_DIRS = (
+    BASE_DIR / "static",
+)
 BASE_URL = credentials.get('base_url', '')
 
 AUTH_USER_MODEL = 'users.User'
@@ -155,14 +157,6 @@ REST_FRAMEWORK = {
 
 
 CORS_ORIGIN_WHITELIST = ['https://*']
-
-
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'myboardplus.utils.my_jwt_response_handler',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
-    'JWT_ALLOW_REFRESH': False,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=15),
-}
 
 
 
