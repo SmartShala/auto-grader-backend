@@ -22,8 +22,7 @@ def index(request):
                 ph_no = ph_no,
                 message = message,
             )
-        else:
-            return redirect('landing:index')
+        return redirect('landing:index')
 
 def helloWorld(request):
     return render(request, 'landing_page/hello.html',
