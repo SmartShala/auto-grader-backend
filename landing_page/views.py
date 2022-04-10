@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from landing_page.models import Testimonial,QueryData
+from psycopg2 import IntegrityError
 # Create your views here.
 def index(request):
     if request.method == 'GET':
@@ -16,12 +17,15 @@ def index(request):
         message = request.POST.get('message')
         if message == '': message = None
         if all([institute_name,email,message]):
-            QueryData.objects.create(
-                name = institute_name,
-                email = email,
-                ph_no = ph_no,
-                message = message,
-            )
+            try:
+                QueryData.objects.create(
+                    name = institute_name,
+                    email = email,
+                    ph_no = ph_no,
+                    message = message,
+                )
+            except IntegrityError:
+                print('Already in DB')
         return redirect('landing:index')
 
 def helloWorld(request):
