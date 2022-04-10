@@ -6,4 +6,5 @@ from users.models import *
 class StudentBodySerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('id','name','student_id','roll_no','academic_year','semester')
+        # fields = '__all__'
+        fields = ('id','name','section','student_id','roll_no','academic_year','semester')
