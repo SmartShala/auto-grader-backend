@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'import_export',
     'users',
     'rest_framework_simplejwt',
+    'landing_page',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,8 @@ BASE_URL = credentials.get('base_url', '')
 
 AUTH_USER_MODEL = 'users.User'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
