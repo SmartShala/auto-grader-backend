@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
 
 
 CORS_ORIGIN_WHITELIST = ['https://*']
-
+CSRF_TRUSTED_ORIGINS = ['https://*.smartshala.live','https://*.127.0.0.1']
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

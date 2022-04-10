@@ -1,6 +1,6 @@
 asgiref==3.5.0
-backports.zoneinfo==0.2.1
 click==8.1.2
+colorama==0.4.4
 defusedxml==0.7.1
 diff-match-patch==20200713
 Django==4.0.3
@@ -16,6 +16,7 @@ h11==0.13.0
 MarkupPy==1.14
 odfpy==1.4.1
 openpyxl==3.0.9
+Pillow==9.1.0
 psycopg2-binary==2.9.3
 PyJWT==1.7.1
 python-decouple==3.6
