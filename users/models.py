@@ -63,7 +63,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(max_length=100, blank=True, null=True)
+    email = models.EmailField(max_length=100,unique=True,default='abc@xyz.com')
     roles = models.ForeignKey(Role, on_delete=models.CASCADE, default=4)
     contact = models.BigIntegerField(default=0, unique=True)
     is_staff = models.BooleanField(default=False)
@@ -72,14 +72,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'contact'
+    USERNAME_FIELD = 'email'
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
         return self
 
     def __str__(self):
-        return str(self.contact)
+        return str(self.email)
 
     class Meta:
         ordering = ['-date_joined']

@@ -11,6 +11,5 @@ class StudentBodySerializer(serializers.ModelSerializer):
     contact = serializers.IntegerField(source="user.contact")
     class Meta:
         model = Student
-        depth = 1
-        fields = ('contact', 'id','name','roll_no','academic_year','semester')
-
+        # fields = '__all__'
+        fields = ('id','name','section','student_id','roll_no','academic_year','semester')

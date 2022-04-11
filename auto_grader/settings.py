@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'import_export',
     'users',
     'rest_framework_simplejwt',
+    'landing_page',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'auto_grader.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,12 +130,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
+STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = (
+    BASE_DIR / "auto_grader/static",
+)
 BASE_URL = credentials.get('base_url', '')
 
 AUTH_USER_MODEL = 'users.User'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -155,15 +160,7 @@ REST_FRAMEWORK = {
 
 
 CORS_ORIGIN_WHITELIST = ['https://*']
-
-
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'myboardplus.utils.my_jwt_response_handler',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
-    'JWT_ALLOW_REFRESH': False,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=15),
-}
-
+CSRF_TRUSTED_ORIGINS = ['https://*.smartshala.live','https://*.127.0.0.1']
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
