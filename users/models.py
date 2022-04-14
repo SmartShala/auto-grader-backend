@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 import uuid
 from django.db import models, transaction
@@ -7,7 +8,6 @@ from django.utils import timezone
 
 
 class Role(models.Model):
-
     IS_SUPERADMIN = 1
     IS_ADMIN = 2
     IS_TEACHER = 3
@@ -20,10 +20,10 @@ class Role(models.Model):
         (IS_STUDENT, 'is_student')
     )
     ROLES_CHOICES = (
-        ('IS_SUPERADMIN', 'is_superadmin'),
-        ('IS_ADMIN', 'is_admin'),
-        ('IS_TEACHER', 'is_teacher'),
-        ('IS_STUDENT', 'is_student')
+        ('SUPERADMIN', 'is_superadmin'),
+        ('ADMIN', 'is_admin'),
+        ('TEACHER', 'is_teacher'),
+        ('STUDENT', 'is_student')
     )
 
     id = models.PositiveSmallIntegerField(
@@ -33,7 +33,9 @@ class Role(models.Model):
 
     def __str__(self):
         return str(self.name)
-
+    
+    
+    
 class UserManager(BaseUserManager):
 
     def _create_user(self, contact, password, **extra_fields):
@@ -91,12 +93,17 @@ class Branch(models.Model):
     
     class Meta:
         db_table = 'student_branch'
+        
+    def __str__(self):
+        return f'{self.name}'
 class Semester(models.Model):
-    Academic_Year = models.DateTimeField(null=True, blank=True)
+    Academic_Year = models.DateField(null=True, blank=True)
     semester_number = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = 'student_semester'
-        
+    
+    def __str__(self):
+        return f'{self.semester_number} Semester of ACADEMIC YEAR {datetime.datetime.strftime(self.Academic_Year,"%Y")}'
         
 class Syllabus(models.Model):
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE,null=True,blank=True)
@@ -109,14 +116,21 @@ class Syllabus(models.Model):
     def __str__(self):
         return f'{self.branch} {self.sem}'
 
-
+class Section(models.Model):
+    name = models.CharField(max_length=5,null=True,blank=True)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE,null=True,blank=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE,null=True,blank=True)
+    
+    class Meta:
+        db_table = 'section'
+        
+    def __str__(self):
+        return f'{self.name} {self.semester} {self.branch}'
 class Student(models.Model):
     user = models.ForeignKey(User, related_name='student', on_delete=models.CASCADE)
     student_id = models.BigIntegerField(unique=True,null=True)
-    name = models.TextField(blank=True, null=True)
-    section = models.CharField(max_length=1, blank=True, null=True)
-    semester = models.ForeignKey(Semester,null=True,blank=True,on_delete=models.CASCADE)
-    branch = models.ForeignKey(Branch,null=True, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50,blank=True, null=True)
+    section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.CASCADE)
     roll_no = models.SmallIntegerField(null=True, blank=True)
     profile_image = models.ImageField(
         upload_to='student_profile_image',

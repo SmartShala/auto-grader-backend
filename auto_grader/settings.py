@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import datetime
+from datetime import timedelta
 from pathlib import Path
 from .env import credentials
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'users',
     'rest_framework_simplejwt',
     'landing_page',
+    'Test_module',
+    
 ]
 
 MIDDLEWARE = [
@@ -164,3 +166,12 @@ CSRF_TRUSTED_ORIGINS = ['https://*.smartshala.live','https://*.127.0.0.1']
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DRF SIMPLEJWT SETTINGS FOR
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=45),
+    'REFRESH_TOKEN_LIFETIME':timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS':False,
+    'UPDATE_LAST_LOGIN': True,
+}
