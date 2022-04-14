@@ -1,8 +1,10 @@
 from django.urls import path
-
+from Test_module.views import (
+    Basicview,
+)
 
 urlpatterns = (
-    path(''),
-    path('create/'),
-    path('start/')
+    path('',Basicview.as_view()),
+    # path('create/'),
+    # path('start/')
 )

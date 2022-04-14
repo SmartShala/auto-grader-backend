@@ -20,7 +20,7 @@ class helloworld(APIView):
 
 class GetStudentsByFilter(generics.ListAPIView):
     
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAdminUser,)
     serializer_class = StudentBodySerializer
     filter_backends = [DjangoFilterBackend,]
     filterset_fields = ['name','student_id','roll_no']
