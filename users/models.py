@@ -84,18 +84,64 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['-date_joined']
 
+    
+class Branch(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    details = models.TextField(null=True,blank=True)
+    
+    class Meta:
+        db_table = 'student_branch'
+class Semester(models.Model):
+    Academic_Year = models.DateTimeField(null=True, blank=True)
+    semester_number = models.IntegerField(null=True, blank=True)
+    class Meta:
+        db_table = 'student_semester'
+        
+        
+class Syllabus(models.Model):
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE,null=True,blank=True)
+    sem = models.ForeignKey(Semester, on_delete=models.CASCADE,null=True,blank=True)
+    details = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        db_table = 'syllabus_table'
+
+    def __str__(self):
+        return f'{self.branch} {self.sem}'
+
+
 class Student(models.Model):
     user = models.ForeignKey(User, related_name='student', on_delete=models.CASCADE)
-    student_id = models.BigIntegerField(default=0, unique=True)
+    student_id = models.BigIntegerField(unique=True,null=True)
     name = models.TextField(blank=True, null=True)
     section = models.CharField(max_length=1, blank=True, null=True)
-    academic_year = models.SmallIntegerField(null=True, blank=True)
-    semester = models.SmallIntegerField(null=True, blank=True)
+    semester = models.ForeignKey(Semester,null=True,blank=True,on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch,null=True, blank=True, on_delete=models.CASCADE)
     roll_no = models.SmallIntegerField(null=True, blank=True)
-    
+    profile_image = models.ImageField(
+        upload_to='student_profile_image',
+        null=True, blank=True)
     class Meta:
         db_table = 'student'
     
     def __str__(self):
         return self.name + ' ' + str(self.student_id)
+    
+
+class Teacher(models.Model):
+    user = models.ForeignKey(User, related_name='teacher', on_delete=models.CASCADE)
+    employee_id = models.BigIntegerField(unique=True,null=True)
+    name = models.TextField(blank=True, null=True)
+    profile_image = models.ImageField(
+        upload_to='teacher_profile_image',
+        null=True,blank=True
+    )
+    details = models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'teacher'
+        
+    def __str__(self):
+        return f'{self.name} {self.employee_id}'
+    
     

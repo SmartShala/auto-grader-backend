@@ -23,7 +23,7 @@ class GetStudentsByFilter(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = StudentBodySerializer
     filter_backends = [DjangoFilterBackend,]
-    filterset_fields = ['academic_year','semester','name','student_id','semester','roll_no']
+    filterset_fields = ['semester','name','student_id','semester','roll_no']
     rendered_classes = [JSONRenderer]
     
     def get_queryset(self):
