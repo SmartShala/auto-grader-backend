@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
     path('',include('landing_page.urls')),
+    path('tests/',include('Test_module.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
