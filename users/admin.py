@@ -4,3 +4,7 @@ from users.models import *
 
 admin.site.register(User)
 admin.site.register(Student)
+admin.site.register(Teacher)
+admin.site.register(Syllabus)
+admin.site.register(Semester)
+admin.site.register(Branch)

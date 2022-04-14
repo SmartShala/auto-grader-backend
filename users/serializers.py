@@ -5,11 +5,11 @@ from users.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('contact', 'id')
+        fields = ('email')
 
 class StudentBodySerializer(serializers.ModelSerializer):
-    contact = serializers.IntegerField(source="user.contact")
+    email = serializers.IntegerField(source="user.email")
     class Meta:
         model = Student
         # fields = '__all__'
-        fields = ('id','name','section','student_id','roll_no','academic_year','semester')
+        fields = ('id','name','section','student_id','email','roll_no','semester')
