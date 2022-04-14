@@ -32,6 +32,8 @@ class Topic(models.Model):
 class Assignment(models.Model):
     name = models.CharField(max_length=100,null=True,blank=True)
     assigned_by = models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True,blank=True)
+    subject = models.ForeignKey(Subject,on_delete=models.CASCADE,null=True,blank=True)
+    topic = models.ForeignKey(Topic,on_delete=models.CASCADE,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     submit_by = models.DateTimeField(null=True,blank=True)
@@ -81,6 +83,7 @@ class StudentAssignmentAns(models.Model):
     student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True,blank=True)
     is_submitted = models.BooleanField(default=False,null=True, blank=True)
     submit_time = models.DateTimeField(null=True, blank=True)
+    score = models.IntegerField(null=True, blank=True)
     
     class Meta:
         db_table = 'student_assignments'
