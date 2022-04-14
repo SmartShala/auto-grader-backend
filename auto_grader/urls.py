@@ -22,6 +22,8 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf.urls.static import static
 
+from auto_grader.serializers import CustomTokenView
+
 urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
@@ -30,6 +32,6 @@ urlpatterns = [
 
 
 urlpatterns += [
-    path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/login/', CustomTokenView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
