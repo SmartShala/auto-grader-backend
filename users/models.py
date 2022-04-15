@@ -133,8 +133,7 @@ class Student(models.Model):
     section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.CASCADE)
     roll_no = models.SmallIntegerField(null=True, blank=True)
     profile_image = models.ImageField(
-        upload_to='student_profile_image',
-        null=True, blank=True)
+        upload_to='student_profile_image', null=True, blank=True)
     class Meta:
         db_table = 'student'
     
