@@ -92,25 +92,6 @@ class AssignmentQuestion(models.Model):
         
     def __str__(self):
         return f'{self.assignment}'
-    
-
-class AssignmentAssigner(models.Model):
-    assignment = models.ForeignKey(Assignment,on_delete=models.SET_NULL,null=True,blank=True)
-    student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True,blank=True)
-    is_submitted = models.BooleanField(default=False,null=True, blank=True)
-    submit_time = models.DateTimeField(null=True, blank=True)
-    score = models.IntegerField(null=True, blank=True)
-    
-    class Meta:
-        db_table = 'student_assignments'
-        
-    def __str__(self):
-        return f'{self.assignment} {self.student}'
-    
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if self.is_submitted and self.submit_time is not None:
-            self.submit_time = now()
-        super().save(force_insert,force_update,using,update_fields)
 
 class StudentAssignmentAns(models.Model):
     assignment = models.ForeignKey(Assignment,on_delete=models.SET_NULL,null=True,blank=True)
