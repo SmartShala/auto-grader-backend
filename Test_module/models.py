@@ -40,7 +40,7 @@ class Assignment(models.Model):
     details = models.TextField(null=True, blank=True)
     topic = models.ForeignKey(Topic,on_delete=models.CASCADE,null=True, blank=True)
     total_marks = models.IntegerField(default=0,null=True, blank=True)    
-    
+    submissions = models.IntegerField(default=0,null=True, blank=True)
     class Meta:
         db_table = 'assignments'
         
@@ -55,6 +55,11 @@ class AssignmentAssigner(models.Model):
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,null=True,blank=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,null=True,blank=True)
     
+    class Meta:
+        db_table = 'assignment_assigner'
+        
+    def __str__(self):
+        return f'{self.assignment}'
 
 class Questions(models.Model):
     question = models.TextField(null=True,blank=True)
