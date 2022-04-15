@@ -33,7 +33,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 urlpatterns = [
     path('api/users/', include('users.urls')),
     path('',include('landing_page.urls')),
-    path('tests/',include('Test_module.urls')),
+    path('api/tests/',include('Test_module.urls')),
 ] 
 
 
