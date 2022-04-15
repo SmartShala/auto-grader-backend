@@ -60,10 +60,10 @@ class AssignmentAssigner(models.Model):
         
     def __str__(self):
         return f'{self.assignment}'
+    
 
-class Questions(models.Model):
+class Question(models.Model):
     question = models.TextField(null=True,blank=True)
-    marks = models.IntegerField(default=0,null=True, blank=True)
     created_by = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,
                                    blank=True,related_name='user_added')
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
@@ -77,11 +77,40 @@ class Questions(models.Model):
     is_descriptive = models.BooleanField(default=False)
     
     class Meta:
-        db_table = 'assignment_questions'
+        db_table = 'questions'
         
     def __str__(self):
         return f'{self.question} [{self.marks}]'
     
+
+class AssignmentQuestion(models.Model):
+    assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE,null=True,blank=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,null=True,blank=True)
+    marks = models.IntegerField(default=0,null=True, blank=True)
+    class Meta:
+        db_table = 'assignment_question_mapper'
+        
+    def __str__(self):
+        return f'{self.assignment}'
+    
+
+class AssignmentAssigner(models.Model):
+    assignment = models.ForeignKey(Assignment,on_delete=models.SET_NULL,null=True,blank=True)
+    student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True,blank=True)
+    is_submitted = models.BooleanField(default=False,null=True, blank=True)
+    submit_time = models.DateTimeField(null=True, blank=True)
+    score = models.IntegerField(null=True, blank=True)
+    
+    class Meta:
+        db_table = 'student_assignments'
+        
+    def __str__(self):
+        return f'{self.assignment} {self.student}'
+    
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.is_submitted and self.submit_time is not None:
+            self.submit_time = now()
+        super().save(force_insert,force_update,using,update_fields)
 
 class StudentAssignmentAns(models.Model):
     assignment = models.ForeignKey(Assignment,on_delete=models.SET_NULL,null=True,blank=True)
@@ -100,11 +129,10 @@ class StudentAssignmentAns(models.Model):
         if self.is_submitted and self.submit_time is not None:
             self.submit_time = now()
         super().save(force_insert,force_update,using,update_fields)
-        
 
 class StudentAnswers(models.Model):
     student_assignment = models.ForeignKey(StudentAssignmentAns,on_delete=models.CASCADE,null=True,blank=True)
-    question = models.ForeignKey(Questions,on_delete=models.CASCADE,null=True,blank=True)
+    question = models.ForeignKey(Question,on_delete=models.CASCADE,null=True,blank=True)
     answer = models.TextField(blank=True,null=True)
     is_locked = models.BooleanField(default=False)
     
