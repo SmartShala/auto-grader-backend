@@ -1,6 +1,9 @@
 import smtplib,ssl
 import json
 from django.template.loader import render_to_string
+from auto_grader.env import credentials
+import traceback
+
 
 class EmailHandler:
     SENDER_EMAIL = ''
@@ -44,13 +47,13 @@ Subject: {}
         
         try:
             server.sendmail(self.SENDER_EMAIL, receiver, self.MESSAGE)
-        except Exception as e:
-            return e
-        finally:
             self.close_connection(server)
+        except Exception as e:
+            traceback.print_exc()
+            print('Error Sending Email:%s'%str(e))
+            return str(e)
+            
 
 class titanEmailHandler(EmailHandler):
-    with open(".env.json", 'r') as fp:
-        host = json.loads(fp.read())['email']['host']
-    EMAIL_HOST = host
+    EMAIL_HOST = credentials.get('email',{}).get('host')
 
