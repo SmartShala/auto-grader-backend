@@ -2,7 +2,7 @@ import pyotp
 from emails.emailing import titanEmailHandler
 import json
 from base64 import b32encode
-from env import credentials
+from .env import credentials
 
 class OtpMail(titanEmailHandler):
     #getting sender email and password
