@@ -2,11 +2,11 @@ import pyotp
 from emails.emailing import titanEmailHandler
 import json
 from base64 import b32encode
-from env import credentials
+from .env import credentials
 
 class OtpMail(titanEmailHandler):
     #getting sender email and password
-    email_data = credentials.get('email')
+    email_data = credentials.get('email',{}).get('otp',{})
     if email_data is not None:
       mail = email_data.get("mail")
       password = email_data.get("pass")
@@ -15,7 +15,7 @@ class OtpMail(titanEmailHandler):
     SENDER_PASSWORD = password
 
     #overriding the function to add body path
-    def send_mail(self, receiver, body='/templates/email/otp_email.html', sub='OTP', 
+    def send_mail(self, receiver, body='email/otp_email.html', sub='OTP', 
                   istemplate=True, context={}):
         return super().send_mail(receiver, body, sub, istemplate, context)
 

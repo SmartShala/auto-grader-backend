@@ -48,8 +48,8 @@ class CustomTokenView(TokenViewBase, OtpHandler):
         if 'password' not in data:
             if otp:
                 # Sending otp to User mail
-                code = self.generation(User.email)
-                self.send_mail(User.email, context={'OTP':code})
+                code = self.generation(sent_user.email)
+                self.send_mail(sent_user.email, context={'OTP':code})
             return Response(data={
                 'is_new': is_new ,
                 'otp': otp,
@@ -66,7 +66,7 @@ class CustomTokenView(TokenViewBase, OtpHandler):
                         "msg":"No OTP Provided"
                     })
                 #Validating Otp
-                if not self.verification(data['otp'], User.email):
+                if not self.verification(data['otp'], sent_user.email):
                     return Response(data={
                         "error":True,
                         "msg": "Invalid OTP/OTP Expired"
@@ -76,6 +76,5 @@ class CustomTokenView(TokenViewBase, OtpHandler):
             if is_new:
                 sent_user.set_password(data['password'])
                 sent_user.save()
-            
-    
-            super().post(request,*args,**kwargs)
+
+            return super().post(request,*args,**kwargs)
