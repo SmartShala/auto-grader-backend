@@ -175,6 +175,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'auto_grader.renderers.CustomBrowsableAPIRenderer'
+    ]
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
 
@@ -202,7 +206,7 @@ SIMPLE_JWT = {
 WAGTAIL_SITE_NAME = 'Auto-grader CMS'
 
 # Replace the search backend
-#WAGTAILSEARCH_BACKENDS = {
+# WAGTAILSEARCH_BACKENDS = {
 #  'default': {
 #    'BACKEND': 'wagtail.search.backends.elasticsearch5',
 #    'INDEX': 'myapp'
