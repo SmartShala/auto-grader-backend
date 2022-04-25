@@ -72,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
+    twoFactor = models.BooleanField(default=False)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
