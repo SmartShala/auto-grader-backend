@@ -183,7 +183,7 @@ REST_FRAMEWORK = {
 }
 
 
-CORS_ORIGIN_WHITELIST = ['https://*']
+CORS_ORIGIN_WHITELIST = ['https://*','http://*',]
 CSRF_TRUSTED_ORIGINS = ['https://*.smartshala.live','https://*.127.0.0.1']
 
 
