@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
-
+    'django_celery_beat',
+    'django_celery_results',
     'taggit',
     'modelcluster',
 
@@ -201,25 +202,19 @@ SIMPLE_JWT = {
 }
 
 
+# CELERY SETTINGS 
+BROKER_URL = f'redis://:{credentials.get("redis_password")}@{credentials.get("redis_host", "localhost")}:{credentials.get("redis_port", 6379)}'
+CELERY_RESULT_BACKEND = BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+
 # WAGTAIL SETTINGS
 
 # This is the human-readable name of your Wagtail install
 # which welcomes users upon login to the Wagtail admin.
 WAGTAIL_SITE_NAME = 'Auto-grader CMS'
 
-# Replace the search backend
-# WAGTAILSEARCH_BACKENDS = {
-#  'default': {
-#    'BACKEND': 'wagtail.search.backends.elasticsearch5',
-#    'INDEX': 'myapp'
-#  }
-#}
-
-# Wagtail email notifications from address
-# WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = 'wagtail@myhost.io'
-
-# Wagtail email notification format
-# WAGTAILADMIN_NOTIFICATION_USE_HTML = True
-
-# Reverse the default case-sensitive handling of tags
 TAGGIT_CASE_INSENSITIVE = True
